@@ -1,6 +1,4 @@
 " Language:     Verilog/SystemVerilog HDL
-" Maintainer:	Amit Sethi <amitrajsethi@yahoo.com>
-" Last Change:	Thu Jul 27 12:09:48 IST 2006
 "
 " Credits:
 "   Originally created by
