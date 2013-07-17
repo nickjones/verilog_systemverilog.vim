@@ -33,7 +33,7 @@ setlocal indentkeys=!^F,o,O,0),0},=begin,=end,=join,=endcase,=join_any,=join_non
 setlocal indentkeys+==endmodule,=endfunction,=endtask,=endspecify
 setlocal indentkeys+==endclass,=endpackage,=endsequence,=endclocking
 setlocal indentkeys+==endinterface,=endgroup,=endprogram,=endproperty
-setlocal indentkeys+==`else,=`endif
+setlocal indentkeys+==`else,=`endif,=`uvm_object_utils_end,`uvm_component_utils_end
 
 " Only define the function once.
 if exists("*GetVerilog_SystemVerilogIndent")
@@ -94,7 +94,8 @@ function GetVerilog_SystemVerilogIndent()
   elseif last_line =~ '`\@<!\<\(if\|else\)\>' ||
     \ last_line =~ '^\s*\<\(for\|case\%[[zx]]\|do\|foreach\|randcase\)\>' ||
     \ last_line =~ '^\s*\<\(always\|always_comb\|always_ff\|always_latch\)\>' ||
-    \ last_line =~ '^\s*\<\(initial\|specify\|fork\|final\)\>'
+    \ last_line =~ '^\s*\<\(initial\|specify\|fork\|final\)\>' ||
+    \ last_line =~ '^\s*`\<\(uvm_.*_begin\)\>'
     if last_line !~ '\(;\|\<end\>\)\s*' . vlog_comment . '*$' ||
       \ last_line =~ '\(//\|/\*\).*\(;\|\<end\>\)\s*' . vlog_comment . '*$'
       let ind = ind + offset
@@ -237,6 +238,10 @@ function GetVerilog_SystemVerilogIndent()
   elseif curr_line =~ '^\s*`\<\(else\|endif\)\>'
     let ind = ind - offset
     if vverb | echo vverb_str "De-indent `else and `endif statement." | endif
+
+  elseif curr_line =~ '^\s*`\<\(uvm_object_utils_end\|uvm_component_utils_end\)\>'
+    let ind = ind - offset
+    if vverb | echo vverb_str "De-indent end of `uvm block statement." | endif
 
   endif
 
