@@ -90,7 +90,7 @@ function GetVerilog_SystemVerilogIndent()
 
   " Indent after if/else/for/case/always/initial/specify/fork blocks
   elseif last_line =~ '`\@<!\<\(if\|else\)\>' ||
-    \ last_line =~ '^\s*\<\(for\|case\%[[zx]]\|do\|foreach\|randcase\)\>' ||
+    \ last_line =~ '^\s*\<\(for\|case\%[[zx]]\|do\|foreach\|randcase\|while\)\>' ||
     \ last_line =~ '^\s*\<\(always\|always_comb\|always_ff\|always_latch\)\>' ||
     \ last_line =~ '^\s*\<\(initial\|specify\|fork\|final\)\>' ||
     \ last_line =~ '^\s*`\<\(uvm_.*_begin\)\>'
@@ -146,11 +146,11 @@ function GetVerilog_SystemVerilogIndent()
   " De-indent for the end of one-line block
   elseif ( last_line !~ '\<begin\>' ||
     \ last_line =~ '\(//\|/\*\).*\<begin\>' ) &&
-    \ last_line2 =~ '\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>.*' .
+    \ last_line2 =~ '\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\|while\)\>.*' .
       \ vlog_comment . '*$' &&
     \ last_line2 !~
       \
-    '\(//\|/\*\).*\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>' &&
+    '\(//\|/\*\).*\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\|while\)\>' &&
     \ last_line2 !~ vlog_openstat . '\s*' . vlog_comment . '*$' &&
     \ ( last_line2 !~ '\<begin\>' ||
     \ last_line2 =~ '\(//\|/\*\).*\<begin\>' )
@@ -193,7 +193,7 @@ function GetVerilog_SystemVerilogIndent()
 
   " De-indent on the end of the block
   " join/end/endcase/endfunction/endtask/endspecify
-  if curr_line =~ '^\s*\<\(join\|join_any\|join_none\|\|end\|endcase\|while\)\>' ||
+  if curr_line =~ '^\s*\<\(join\|join_any\|join_none\|\|end\|endcase\)\>' ||
       \ curr_line =~ '^\s*\<\(endfunction\|endtask\|endspecify\|endclass\)\>' ||
       \ curr_line =~ '^\s*\<\(endpackage\|endsequence\|endclocking\|endinterface\)\>' ||
       \ curr_line =~ '^\s*\<\(endgroup\|endproperty\|endprogram\)\>' ||
@@ -213,7 +213,7 @@ function GetVerilog_SystemVerilogIndent()
       \ last_line !~ '^\s*\<\(property\|program\)\>' &&
       \ last_line !~ '^\s*\()*\s*;\|)\+\)\s*' . vlog_comment . '*$' &&
       \ ( last_line =~
-      \ '\<\(`\@<!if\|`\@<!else\|for\|case\%[[zx]]\|always\|initial\|do\|foreach\|randcase\|final\)\>' ||
+      \ '\<\(`\@<!if\|`\@<!else\|for\|case\%[[zx]]\|always\|initial\|do\|foreach\|randcase\|final\|while\)\>' ||
       \ last_line =~ ')\s*' . vlog_comment . '*$' ||
       \ last_line =~ vlog_openstat . '\s*' . vlog_comment . '*$' )
       let ind = ind - offset
