@@ -27,7 +27,7 @@ syn keyword verilogStatement   endprimitive endspecify endtable endtask
 syn keyword verilogStatement   event force function
 syn keyword verilogStatement   generate genvar highz0 highz1 ifnone
 syn keyword verilogStatement   incdir include initial inout input
-syn keyword verilogStatement   instance integer large liblist
+syn keyword verilogStatement   instance integer large let liblist
 syn keyword verilogStatement   library localparam macromodule medium
 syn keyword verilogStatement   module nand negedge nmos nor
 syn keyword verilogStatement   noshowcancelled not notif0 notif1 or
@@ -86,6 +86,7 @@ syn keyword verilogStatement   wildcard within
 syn keyword verilogStatement   semaphore triggered
 syn keyword verilogStatement   std
 syn keyword verilogStatement   new
+syn keyword verilogStatement   soft
 
 syn keyword verilogTypeDef     typedef enum
 
@@ -193,6 +194,7 @@ syn match   verilogMethod      "\.unique_index\>"
 syn match   verilogMethod      "\.xor\>"
 
 syn match   verilogAssertion   "\<\w\+\>\s*:\s*\<assert\>\_.\{-});"
+syn match   VerilogNonLRM      "\$psprintf"
 
 "-------------------------------------------------------------------------------
 " UVM
@@ -838,10 +840,10 @@ if version >= 508 || !exists("did_verilog_syn_inits")
    HiLink verilogGlobal		 Define
    HiLink verilogDirective	 SpecialComment
    HiLink verilogEscape		 Special
-
    HiLink verilogMethod          Function
    HiLink verilogTypeDef         TypeDef
    HiLink verilogAssertion       Include
+   HiLink verilogNonLRM          SpellBad
 
    HiLink uvmClass               Type
    HiLink uvmTypeDef             Type
